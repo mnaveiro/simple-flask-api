@@ -13,12 +13,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'mnp'
 api = Api(app)
 
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
-
 jwt = JWT(app, authenticate, identity)  # /auth
 
 api.add_resource(Item, '/item/<string:name>')
@@ -29,7 +23,7 @@ api.add_resource(StoreList, '/stores')
 
 api.add_resource(UserRegister, '/register')
 
-if __name__ == '__main__':
+if __name__ == '__main__': # esto es para ejecutar en local
     from db import db  # para evitar circular imports
     db.init_app(app)
     app.run(port=5005, debug=True)
